@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+
+    <style>
+        body {
+            background-color: rgb(18, 18, 66);
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 25vh;
+
+        }
+
+        img {
+            max-width: 100%;
+            background-size: cover;
+            height: auto;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .column {
+            float: left;
+            width: 25%;
+            padding: 0 50px;
+        }
+
+        .row {
+            margin: 0 30px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(232, 227, 227, 0.2);
+            padding: 16px;
+            text-align: center;
+            background-color: rgb(73, 79, 247);
+            margin-top: 100px;
+            margin-left: 200px;
+            width: 225px;
+            background: rgba(121, 121, 255, 0.22);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(16.9px);
+            -webkit-backdrop-filter: blur(16.9px);
+            height: 300px;
+            color: #fff;
+            font-size: 14px;
+            overflow-y: auto; 
+        }
+
+        .form-control {
+            position: relative;
+            margin: 20px 0 40px;
+            width: 190px;
+        }
+
+        .form-control input {
+            background-color: transparent;
+            border: 0;
+            border-bottom: 2px #fff solid;
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            font-size: 14px;
+            color: #fff;
+
+        }
+
+        .form-control input:focus,
+        .form-control input:valid {
+            outline: 0;
+            border-bottom-color: lightblue;
+        }
+
+        .form-control label {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .form-control label span {
+            display: inline-block;
+            font-size: 18px;
+            min-width: 5px;
+            color: #fff;
+            transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .form-control input:focus+label span,
+        .form-control input:valid+label span {
+            color: lightblue;
+            transform: translateY(-30px);
+        }
+
+        button {
+            appearance: none;
+            background-color: #FAFBFC;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+            box-sizing: border-box;
+            color: #24292E;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            padding: 6px 16px;
+            position: relative;
+            transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+            touch-action: auto;
+            vertical-align: middle;
+            white-space: nowrap;
+            word-wrap: break-word;
+            margin-top: 50px;
+        }
+
+        button:hover {
+            background-color: rgb(98, 169, 232);
+            text-decoration: none;
+            transition-duration: 0.1s;
+        }
+
+        button:disabled {
+            background-color: #FAFBFC;
+            border-color: rgba(27, 31, 35, 0.15);
+            color: #959DA5;
+            cursor: default;
+        }
+
+        button:active {
+            background-color: #EDEFF2;
+            box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+            transition: none 0s;
+        }
+
+        button:focus {
+            outline: 1px transparent;
+        }
+
+        button:before {
+            display: none;
+        }
+
+        button:-webkit-details-marker {
+            display: none;
+        }
+
+        #lists .column:nth-last-child(-n+2) .card {
+            width: 310px;
+            margin-left: 150px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin-bottom: 8px;
+            margin-top: 10px;
+            border-radius: 8px;
+            color: #000;
+            background: rgba(102, 131, 217, 0.22);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(17, 17, 17, 0.1);
+            backdrop-filter: blur(16.9px);
+            -webkit-backdrop-filter: blur(16.9px);
+        }
+
+        .completed-task {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .close-icon {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        p{
+            font-size: 16px;
+            color:#FAFBFC;
+            text-align: center;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="center-container">
+        <img src="focus.png" alt="Centered Image">
+    </div>
+    <p>List down your tasks with focus. <br> Set the due dates for your tasks. </p>
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <div class="content">
+                    <div class="form-control">
+                        <input type="value" required="" id="taskInput">
+                        <label>
+                            <span style="transition-delay:0ms">T</span><span style="transition-delay:50ms">a</span><span style="transition-delay:100ms">s</span><span style="transition-delay:150ms">k</span><span style="transition-delay:200ms">
+                        </label>
+
+                        <input type="date" id="dateInput" name="dateInput">
+                        <br>
+                        <button onclick="addTask()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="lists">
+        <div class="column">
+            <div class="card" id="tasks">
+                To-Do List
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="completedTasks">
+                Completed Tasks
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById("taskInput");
+            var dateInput = document.getElementById("dateInput");
+            var tasks = document.getElementById("tasks");
+            var completedTasks = document.getElementById("completedTasks");
+
+            if (taskInput.value.trim() === "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            var taskItem = document.createElement("div");
+            taskItem.classList.add("task-item");
+
+            var taskText = document.createElement("span");
+            taskText.textContent = taskInput.value;
+
+            var dateText = document.createElement("span");
+            dateText.textContent = "Due: " + dateInput.value + "";
+
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.addEventListener("change", function () {
+                if (this.checked) {
+                    taskItem.classList.add("completed-task");
+                    completedTasks.appendChild(taskItem);
+                    tasks.removeChild(taskItem);
+                } else {
+                    taskItem.classList.remove("completed-task");
+                    tasks.appendChild(taskItem);
+                    completedTasks.removeChild(taskItem);
+                }
+            });
+
+            var closeIcon = document.createElement("span");
+            closeIcon.classList.add("close-icon");
+            closeIcon.innerHTML = "&#10006;";
+            closeIcon.addEventListener("click", function () {
+                taskItem.remove();
+            });
+
+            taskItem.appendChild(checkbox);
+            taskItem.appendChild(taskText);
+            taskItem.appendChild(dateText);
+            taskItem.appendChild(closeIcon);
+
+            taskInput.value = "";
+            dateInput.value = "";
+
+            tasks.appendChild(taskItem);
+        }
+    </script>
+</body>
+</html>
